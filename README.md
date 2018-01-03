@@ -33,5 +33,7 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org
 ## 原理
 
 使用`Node.js`调用`adb`命令，拉取手机截图到浏览器。
+
 用户在浏览器手动完成两个点的标记之后，点击【GO】按钮，通过`socket`消息告诉`Node`去执行`adb`操作。
+
 之后将新的画面传回到前台...
