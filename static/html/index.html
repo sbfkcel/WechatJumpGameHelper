@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>跳一跳小助手</title>
+    <link rel="stylesheet" href="./static/css/style.css">
+</head>
+<body>
+    <div class="win"></div>
+    <div class="side">
+        <h3>StarX</h3>
+        <input id="side__starX" type="number" disabled="disabled">
+        <h3>StarY</h3>
+        <input id="side__starY" type="number" disabled="disabled">
+        <h3>EndX</h3>
+        <input id="side__endX" type="number" disabled="disabled">
+        <h3>EndY</h3>
+        <input id="side__endY" type="number" disabled="disabled">
+        <h3>Distance</h3>
+        <input id="side__distance" type="number" disabled="disabled">
+        <h3>Time/px</h3>
+        <input id="side__timePx" type="number" value="1.223" min="0">
+        <button id="side__submit">GO</button>
+    </div>
+    <script src="./static/js/socket.io.js"></script>
+    <script src="./static/js/index.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "wx-tiaoyitiao",
+  "version": "1.0.0",
+  "description": "WeChat game jump aid",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sbfkcel@163.com",
+  "license": "MIT",
+  "dependencies": {
+    "fastify": "^0.37.0",
+    "fastify-static": "^0.5.0",
+    "socket.io": "^2.0.4"
+  }
+}

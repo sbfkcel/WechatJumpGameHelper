@@ -1,0 +1,4 @@
+/node_modules/
+/.vscode/
+/static/screen/sc.png
+.DS_Store
