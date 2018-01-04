@@ -4,6 +4,7 @@
 
 支持`Mac OS`、`windows`、`Linux`系统，无需要手动设置`adb`环境。
 
+> 视频演示：http://v.youku.com/v_show/id_XMzI5MDY3Njk0MA==.html?spm=a2hzp.8253869.0.0
 
 ## 安装
 
