@@ -11,3 +11,7 @@
 *.jpg linguist-language=JavaScript
 *.svg linguist-language=JavaScript
 *.mp4 linguist-language=JavaScript
+*.dylib linguist-language=JavaScript
+*.py linguist-language=JavaScript
+*.properties linguist-language=JavaScript
+*.so linguist-language=JavaScript
