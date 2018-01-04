@@ -48,7 +48,6 @@ class Main{
         });
     }
 
-
     /**
      * 画线
      */
@@ -92,7 +91,6 @@ class Main{
             ctx.lineTo(width,data.endY + 0.5);
             ctx.stroke();
         };
-
     }
     createElement(obj){
         const _ts = this,
