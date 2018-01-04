@@ -34,6 +34,7 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org
 - 连接两点之间，建议找好对应的参考点，例如：`小人的菊花` --> `目标中心`，见下图所示。
 
 <video src="https://rawcdn.githack.com/sbfkcel/WechatJumpGameHelper/master/static/images/demo.mp4" width="888" height="500"></video>
+
 ![连接点示意图](https://rawcdn.githack.com/sbfkcel/WechatJumpGameHelper/master/static/images/Snipaste_2018-01-04_11-24-08.png?v=6)
 
 
