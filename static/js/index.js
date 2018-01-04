@@ -62,6 +62,7 @@ class Main{
         
         ctx.clearRect(0,0,width,height);
 
+        //绘制标记线
         ctx.lineWidth = 2;
         ctx.strokeStyle = '#ff0000';
         ctx.beginPath();
@@ -77,17 +78,20 @@ class Main{
             };   
         };
         
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = 'rgba(74,255,255,0.6)';
-        ctx.beginPath();
-        ctx.moveTo(data.endX + 0.5,0);
-        ctx.lineTo(data.endX + 0.5,height);
-        ctx.stroke();
+        //有焦点时才绘制参考线
+        if(_ts.isFocus){
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'rgba(74,255,255,0.8)';
+            ctx.beginPath();
+            ctx.moveTo(data.endX + 0.5,0);
+            ctx.lineTo(data.endX + 0.5,height);
+            ctx.stroke();
 
-        ctx.beginPath();
-        ctx.moveTo(0,data.endY + 0.5);
-        ctx.lineTo(width,data.endY + 0.5);
-        ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0,data.endY + 0.5);
+            ctx.lineTo(width,data.endY + 0.5);
+            ctx.stroke();
+        };
 
     }
     createElement(obj){
@@ -141,6 +145,8 @@ class Main{
 
             _ts.drawLine(data);
         };
+
+        //画面中移动中绘制辅助参考线及标记线
         e.oCanvas.onmousemove = event => {
             data.endX = event.pageX;
             data.endY = event.pageY;
@@ -161,17 +167,26 @@ class Main{
 
                 //前台显示限制3位小数
                 e.oSide__distance.value = data.distance.toFixed(3);
-
                 _ts.drawLine(data,true);
             }else{
                 _ts.drawLine(data);
-            };
-            
+            };  
         };
+
+        //弹起时，设置需要绘制的结束点
         e.oCanvas.onmouseup = event => {
             _ts.isMouseDown = false;
             data.oldEndX = data.endX;
             data.oldEndY = data.endY;
+        };
+
+        //光标移除画面，不再绘制辅助参考线
+        e.oCanvas.onmouseover = event => {
+            _ts.isFocus = true;
+        };
+        e.oCanvas.onmouseout = event => {
+            _ts.isFocus = false;
+            _ts.drawLine(data);
         };
 
         e.oSubmit.onclick = event => {
