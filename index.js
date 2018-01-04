@@ -10,6 +10,7 @@ class TiaoYiTiao {
             fastify:require('fastify'),
             fastifyStatic:require('fastify-static'),
             io:require('socket.io'),
+            chalk:require('chalk'),
             execFile:execFile
         };
 
@@ -18,15 +19,6 @@ class TiaoYiTiao {
             let osName = _ts.m.os.type();
             return osName === 'Darwin' ? 'mac' : osName === 'Linux' ? 'linux' : 'win';
         })();
-
-        // _ts.adb('shell input swipe 100 100 100 800 2000').then(v => {
-        //     console.log('执行完成');
-        //     console.log(v);
-        // }).catch(e => {
-        //     console.log('错误了');
-        //     console.log(e);
-        // })
-
         
         _ts.screenSize().then(v => {
             let status = v.status,
@@ -36,8 +28,9 @@ class TiaoYiTiao {
                 _ts.createServer(data);
             };
         }).catch(e => {
-            console.log(e.msg);
-            console.log(e.data);
+            _ts.log('error',e.status);
+            _ts.log('error',e.msg);
+            _ts.log('error','请检查手机是否已经成功连接电脑并已经开启USB调试模式');
         });
     }
 
@@ -45,7 +38,6 @@ class TiaoYiTiao {
         const _ts = this;
         return new Promise((resolve,reject)=>{
             _ts.adb('shell input swipe 100 100 100 100 '+time).then(v => {
-                console.log('跳完了');
                 resolve({
                     status:'success',
                     msg:'跳动指令执行完成',
@@ -80,14 +72,18 @@ class TiaoYiTiao {
                         socket.emit('updateImg',{
                             imgSrc:'./static/screen/sc.png?v='+(+new Date)
                         });
+                        _ts.log('success','完成跳跃');
+                        _ts.log('tip',v.msg);
                     }).catch(e => {
-                        console.log('更新图片四边')
+                        _ts.log('error',e.status);
+                        _ts.log('error',e.msg);
                     });
                     
                 },1000);
                 
             }).catch(e => {
-
+                _ts.log('error',e.status);
+                _ts.log('error',e.msg);
             });
         });
 
@@ -96,26 +92,21 @@ class TiaoYiTiao {
             socket.emit('updateImg',{
                 imgSrc:'./static/screen/sc.png?v='+(+new Date)
             });
+            _ts.log('success',v.msg);
+        }).catch(e => {
+            _ts.log('error',e.status);
+            _ts.log('error',e.msg);
         });
-
-        
-
 
         // //前台使用socket.send方法发送的消息
         // socket.on('message',data=>{
         //     console.log(data);
         // });
 
-        // //任何事件
-        // socket.on('anything',data => {
-        //     console.log('任何事件',data)
+        // //关闭断开触发
+        // socket.on('disconnect',data => {
+        //     console.log('断开',data);
         // });
-        
-
-        //关闭断开触发
-        socket.on('disconnect',data => {
-            console.log('断开',data);
-        });
     }
 
     createServer(screenSize){
@@ -145,6 +136,10 @@ class TiaoYiTiao {
         fastify.listen(5200,err => {
             if(err){
                 throw new Error(err);
+            }else{
+                _ts.log('tip','==========================================');
+                _ts.log('success','使用Chrome访问 http://localhost:5200');
+                _ts.log('tip','==========================================');
             }; 
         });
     }
@@ -162,13 +157,13 @@ class TiaoYiTiao {
                 _ts.adb(`pull /sdcard/${imgName} ${savePath}`).then(v => {
                     resolve({
                         status:'success',
-                        msg:'截图保存成功',
+                        msg:'完成屏幕截图更新',
                         data:v
                     });
                 }).catch(e => {
                     resolve({
                         status:'success',
-                        msg:'截图保存失败',
+                        msg:'屏幕截图更新失败',
                         data:e
                     });
                 });
@@ -251,6 +246,27 @@ class TiaoYiTiao {
                 };
             });
         });
+    }
+
+    log(type,text){
+        const _ts = this,
+            m = _ts.m,
+            log = console.log;
+
+        switch (type) {
+            case 'success':
+                log(m.chalk.green(text));
+            break;
+            case 'error':
+                log(m.chalk.red(text));
+            break;
+            case 'tip':
+                log(m.chalk.yellow(text));
+            break;
+            default:
+                log(text);
+            break;
+        };
     }
 };
 

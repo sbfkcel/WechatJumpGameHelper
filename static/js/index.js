@@ -42,7 +42,9 @@ class Main{
         //更新图片
         _ts.socket.on('updateImg',data => {
             e.oImg.src = data.imgSrc;
+            e.oImg.style.display = 'block';
             e.oWin.className = 'win';
+            e.oWin.style.display = 'block';
         });
     }
 
@@ -60,16 +62,23 @@ class Main{
         
         ctx.clearRect(0,0,width,height);
 
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#ff0000';
+        ctx.beginPath();
         if(isGauge){
-            ctx.beginPath();
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = '#ff0000';
             ctx.moveTo(data.startX,data.startY);
             ctx.lineTo(data.endX,data.endY);
             ctx.stroke();
+        }else{
+            if(data.oldEndX && data.oldEndY){
+                ctx.moveTo(data.startX,data.startY);
+                ctx.lineTo(data.oldEndX,data.oldEndY);
+                ctx.stroke();
+            };   
         };
         
-        ctx.strokeStyle = 'rgba(255,0,0,0.4)';
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'rgba(74,255,255,0.6)';
         ctx.beginPath();
         ctx.moveTo(data.endX + 0.5,0);
         ctx.lineTo(data.endX + 0.5,height);
@@ -93,11 +102,16 @@ class Main{
         e.oCanvas.height = obj.height;
         _ts.ctx = e.oCanvas.getContext('2d');
 
+        //容器
+        e.oWin.style.width = obj.width + 'px';
+        e.oWin.style.height = obj.height + 'px';
+
         //图片
         e.oImg = new Image();
         e.oImg.className = 'win__img';
         e.oImg.style.width = obj.width + 'px';
         e.oImg.style.height = obj.height + 'px';
+        e.oImg.style.display = 'none';
 
         //提示
         e.oTip = _ts.ce('<div class="win__loading"></div>');
@@ -125,7 +139,6 @@ class Main{
             e.oSide__starX.value = data.startX;
             e.oSide__starY.value = data.startY;
 
-            console.log(1);
             _ts.drawLine(data);
         };
         e.oCanvas.onmousemove = event => {
@@ -140,7 +153,6 @@ class Main{
                 data.distance = (()=>{
                     let w = Math.abs(data.startX - data.endX),
                         h = Math.abs(data.startY - data.endY);
-                    
                     //console.log(w,h);
 
                     //根据勾股定理得出边长
@@ -151,11 +163,15 @@ class Main{
                 e.oSide__distance.value = data.distance.toFixed(3);
 
                 _ts.drawLine(data,true);
+            }else{
+                _ts.drawLine(data);
             };
             
         };
         e.oCanvas.onmouseup = event => {
             _ts.isMouseDown = false;
+            data.oldEndX = data.endX;
+            data.oldEndY = data.endY;
         };
 
         e.oSubmit.onclick = event => {
@@ -163,6 +179,9 @@ class Main{
                 let time = data.distance * +data.timePx,
                     width = e.oCanvas.width,
                     height = e.oCanvas.height;
+
+                data.oldEndX = undefined;
+                data.oldEndY = undefined;
 
                 e.oWin.className = 'win win--jump';
                 _ts.ctx.clearRect(0,0,width,height);
