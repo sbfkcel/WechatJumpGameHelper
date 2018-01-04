@@ -1,4 +1,13 @@
-*.js linguist-language=Javascript
-*.css linguist-language=Javascript
-*.html linguist-language=Javascript
-*.png linguist-language=Javascript
+*.js linguist-language=JavaScript
+*.css linguist-language=JavaScript
+*.html linguist-language=JavaScript
+*.png linguist-language=JavaScript
+*.dll linguist-language=JavaScript
+*.exe linguist-language=JavaScript
+*.txt linguist-language=JavaScript
+*.xml linguist-language=JavaScript
+*.zip linguist-language=JavaScript
+*.txt linguist-language=JavaScript
+*.jpg linguist-language=JavaScript
+*.svg linguist-language=JavaScript
+*.mp4 linguist-language=JavaScript
