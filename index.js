@@ -15,6 +15,7 @@ class TiaoYiTiao {
         };
 
         _ts.config = {};
+        _ts.screenData = {};
         _ts.config.os = (()=>{
             let osName = _ts.m.os.type();
             return osName === 'Darwin' ? 'mac' : osName === 'Linux' ? 'linux' : 'win';
@@ -25,6 +26,8 @@ class TiaoYiTiao {
                 data = v.data || {};
 
             if(status === 'success'){
+                _ts.screenData.width = data.width;
+                _ts.screenData.height = data.height;
                 _ts.createServer(data);
             };
         }).catch(e => {
@@ -37,7 +40,13 @@ class TiaoYiTiao {
     jump(time){
         const _ts = this;
         return new Promise((resolve,reject)=>{
-            _ts.adb('shell input swipe 100 100 100 100 '+time).then(v => {
+            let randomFrom = (lowerValue,upperValue)=>{
+                    return Math.floor(Math.random() * (upperValue - lowerValue + 1) + lowerValue);
+                },
+                x1 = (_ts.screenData.width / 2 + randomFrom(6,40)) | 0,
+                y1 = (_ts.screenData.height * 0.8 + randomFrom(8,20)) | 0;
+
+            _ts.adb(`shell input swipe ${x1} ${y1} ${x1} ${y1} ${time}`).then(v => {
                 resolve({
                     status:'success',
                     msg:'跳动指令执行完成',
