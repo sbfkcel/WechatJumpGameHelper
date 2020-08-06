@@ -15,7 +15,7 @@
   "gypfile": false,
   "private": true,
   "dependencies": {
-    "eslint": "^3.14.1",
+    "eslint": "^7.6.0",
     "eslint-config-google": "^0.6.0",
     "eslint-plugin-html": "^2.0.0"
   }
